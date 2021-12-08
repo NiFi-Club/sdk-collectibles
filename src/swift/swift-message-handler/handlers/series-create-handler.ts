@@ -15,15 +15,15 @@ import { Double } from "mongodb";
 export class SeriesCreateHandler implements ISwiftMessageHandler<SeriesCreate> {
   private readonly pinataService: PinataService;
   constructor(
-      private readonly actionService: ActionService, 
-      private readonly seriesService: SeriesService, 
+      private readonly actionService: ActionService,
+      private readonly seriesService: SeriesService,
       private readonly tonColRootContract: TonClientRootContract,
       private readonly tonClient: TonClient,
       private readonly tonClientColContractFactory: TonClientColContractFactory
   ){
     this.pinataService = new PinataService();
   }
-      
+
   public async processMessage(message: SeriesCreate): Promise<void> {
     const addr = await this.tonColRootContract.getCollectionAddress(message.data.id);
 
@@ -45,7 +45,7 @@ export class SeriesCreateHandler implements ISwiftMessageHandler<SeriesCreate> {
     });
 
     const json = await this.pinataService.getSeriesJson(info.data.hash);
-    
+
     json.layers.forEach(layer => {
       layer.points.forEach((point) => {
         point.point = <number> <unknown> new Double(point.point);
@@ -55,6 +55,7 @@ export class SeriesCreateHandler implements ISwiftMessageHandler<SeriesCreate> {
     await this.seriesService.saveSeries({
       hash: info.data.hash,
       ...json,
+      startTime: <number> <unknown> new Double(json.startTime || 0),
       address: addr.data,
       seriesId: generateId(this.tonColRootContract.address, info.data.id),
       createdAt: <number> <unknown> new Double(Math.round(new Date().getTime() / 1000)),
