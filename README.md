@@ -20,7 +20,9 @@ MSIG_PUBLIC - multisig public key (for mint transaction)
 MSIG_SECRET - multisig secret key (for mint transaction)
 MSIG_ADDRESS - multisig address (for mint transaction)
 
-TON_ENDPOINTS - for dev: 'https://net5.ton.dev/|https://net1.ton.dev/', for main net: 'https://main2.ton.dev/|https://main3.ton.dev/|https://main4.ton.dev/'
+TON_ENDPOINTS - 
+   for dev: 'https://net5.ton.dev/|https://net1.ton.dev/',
+   for main net: 'https://main2.ton.dev/|https://main3.ton.dev/|https://main4.ton.dev/'
 
 
 Then you will need to create mongodb class for swift codes, and it must be named as SWIFT_CODES, here is an example of data:
@@ -60,14 +62,14 @@ To create collectible, you will:
 2. Send request to https://yourdomain/sdk/series/generate with such payload: 
 
 {
-   "name": "test",
-   "description": "",
+   "name": "Best EVER collectible",
+   "description": "My first EVER collectible",
    "layers": [
       {
-         "layer": "dsaas",
+         "layer": "Background",
          "images": [
             {
-               "subtitle": "",
+               "subtitle": "Pink background",
                "hash": "QmXpZoozntT7Af7MHPs62trvimx6E9VtT6n4Wt7D861iP8",
                "mimetype": "image/png",
                "width": 2000,
@@ -84,11 +86,11 @@ To create collectible, you will:
    "startTime": 1638973091
 }
 
-3. Then needs to send transaction to collection root with hash, which was returned by sdk and collectible will be deployed
+3. Then it needs to be sent to collectible root with collection hash (which was returned by sdk) and collectible will be deployed.
 
 
 
 
 ## Token mint 
 
-1. Needs to send transaction with mintCost of the collectible
+1. Sends transaction with mintCost of the collectible.
